@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Календарь</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="nav">
+    <button id="prev" title="Предыдущий месяц">‹</button>
+    <h1 id="month"></h1>
+    <button id="next" title="Следующий месяц">›</button>
+    <button id="today" class="ghost">Сегодня</button>
+  </div>
+  <div class="links">
+    <a id="export" href="/api/export.ics">Скачать .ics</a>
+    <button id="subscribe" class="ghost">Подписка</button>
+  </div>
+</header>
+
+<main>
+  <section class="calendar">
+    <div class="weekdays"><div>пн</div><div>вт</div><div>ср</div><div>чт</div><div>пт</div><div>сб</div><div>вс</div></div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <aside>
+    <div class="panel">
+      <h2>Чат с календарём</h2>
+      <div id="chatlog" class="chatlog">
+        <div class="hint">Напишите, например: «каждый понедельник зарядка в 8», «каждую пятницу сдача ведомости», «завтра в 15 созвон с Ильёй».</div>
+      </div>
+      <form id="chatform">
+        <input id="chatinput" autocomplete="off" placeholder="Что запланировать?" maxlength="500">
+        <button>→</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h2>Черновики <span id="draftcount" class="count"></span></h2>
+      <p class="muted small">Бот нашёл в переписке, но не уверен. Подтвердите или отклоните.</p>
+      <ul id="drafts" class="drafts"></ul>
+    </div>
+
+    <div id="status" class="status small muted"></div>
+  </aside>
+</main>
+
+<dialog id="details">
+  <form method="dialog">
+    <h3 id="d-title"></h3>
+    <p id="d-when"></p>
+    <p id="d-meta" class="muted small"></p>
+    <div class="actions">
+      <button id="d-confirm" value="confirm">Подтвердить</button>
+      <button id="d-delete" value="delete" class="danger">Удалить</button>
+      <button value="close" class="ghost">Закрыть</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
