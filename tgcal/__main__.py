@@ -29,10 +29,11 @@ def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(prog="tgcal", description="Календарь с локальной LLM и Telegram Business")
     p.add_argument("mode", choices=["web", "bot", "all"], nargs="?", default="all",
                    help="web — только календарь, bot — только бот, all — оба (по умолчанию)")
+    p.add_argument("--port", type=int, help="порт веб-интерфейса (по умолчанию PORT или 8000)")
     args = p.parse_args(argv)
 
     load_dotenv()
-    settings = Settings.from_env()
+    settings = Settings.from_env(**({"port": args.port} if args.port else {}))
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)  # иначе в лог попадает URL с токеном бота
     repo = Repo(settings.db_path)

@@ -65,7 +65,8 @@ class Settings:
     def from_env(cls, **overrides) -> "Settings":
         values = {}
         for f in fields(cls):
-            raw = os.getenv(f.name.upper())
+            # Не TZ: эту переменную читает C-рантайм (на Windows — в своём формате) и сбивает локальное время.
+            raw = os.getenv("CALENDAR_TZ" if f.name == "tz" else f.name.upper())
             if raw is None or raw == "":
                 continue
             if f.type in ("int", int):
